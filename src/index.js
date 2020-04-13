@@ -470,7 +470,11 @@ class QuillImage {
 	*/
 	async insert (quill, dataUrl, type) {
 		const imageId = guid();
-		const index = (quill.getSelection() || {}).index || quill.getLength();
+		let index = (quill.getSelection() || {}).index;
+		if (!Number.isInteger(index)) {
+			index = quill.getLength();
+		}
+
 		quill.insertEmbed(index, 'image', {
 			imageId,
 			src: dataUrl,
