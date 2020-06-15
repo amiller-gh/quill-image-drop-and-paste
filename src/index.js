@@ -312,7 +312,7 @@ class QuillImage {
 
 		this.options = options;
 		if (typeof this.options.handler !== 'function') {
-			this.options.handler = ((_quill, _id, data, _type) => { console.log(data); return data; });
+			this.options.handler = ((id, data, type) => { console.log(id, data, type); return data; });
 		}
 
 		const self = this;
@@ -445,7 +445,6 @@ class QuillImage {
 
 	/* handle image paste event, steal back from Quill */
 	handlePaste (quill, e) {
-		e.stopImmediatePropagation();
 		if (e.clipboardData && e.clipboardData.items && e.clipboardData.items.length) {
 			this.readFiles(e.clipboardData.items, this.insert.bind(this, quill), e)
 		}
@@ -456,7 +455,8 @@ class QuillImage {
 		[].forEach.call(files, file => {
 			var type = file.type
 			if (!type.match(/^image\/(gif|jpe?g|a?png|svg|webp|bmp)/i)) return
-			e.preventDefault()
+			e.preventDefault();
+			e.stopImmediatePropagation();
 			const reader = new FileReader()
 			reader.onload = (e) => {
 				callback(e.target.result, type)
@@ -487,7 +487,7 @@ class QuillImage {
 		quill.formatText(index, 1, 'image');
 		document.getElementById(imageId).focus();
 		if (dataUrl && type) {
-			const url = await this.options.handler(quill, imageId, dataUrl, type);
+			const url = await this.options.handler(imageId, dataUrl, type);
 			document.getElementById(imageId).querySelector('img').setAttribute('src', url);
 		}
 	}
