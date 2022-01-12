@@ -19,17 +19,17 @@ export const STYLES = `
   margin: 0 0 12px;
 }
 .quill-image[data-format=center] {
-  max-width: 50%;
+  max-width: 75%;
   margin: 0 auto 12px;
   width: 100%;
 }
 .quill-image[data-format=left] {
-  width: calc(50% - 12px);
+  width: calc(75% - 12px);
   float: left;
   margin: 0 12px 12px 0;
 }
 .quill-image[data-format=right] {
-  width: calc(50% - 12px);
+  width: calc(75% - 12px);
   float: right;
   margin: 0 0 12px 12px;
 }
@@ -65,11 +65,14 @@ export const STYLES = `
 textarea.quill-image__caption-edit {
   position: absolute;
   padding: 4px 0 0 !important;
+  width: 100%;
   resize: none !important;
   border: none !important;
-  top: calc(100% - 4px);
+  top: 0;
   left: 0;
-  transform: translateY(-100%);
+  bottom: 0;
+  right: 0;
+  margin: 0;
   background: transparent;
   z-index: 3;
 }
@@ -224,7 +227,6 @@ textarea.quill-image__caption-edit {
 
 .quill-image img[src^="${TRANSPARENT_PIXEL}"] {
   width: 100%;
-  min-width: 280px;
   max-width: 100%;
   height: 0;
   padding-bottom: 71%;
@@ -255,7 +257,6 @@ textarea.quill-image__caption-edit {
 
 .quill-image:focus-within img[src^="${TRANSPARENT_PIXEL}"] {
   width: 100%;
-  min-width: 280px;
   max-width: 100%;
   height: 0;
   padding-bottom: 71%;
@@ -265,7 +266,5 @@ textarea.quill-image__caption-edit {
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: center;
-
 }
-
 `;

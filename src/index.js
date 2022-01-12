@@ -252,10 +252,11 @@ function makeEmbed(Quill, options) {
 			node.insertBefore(makeMenu(node), caption);
 			node.insertBefore(makeAltButton(node), caption);
 			node.insertBefore(makeLinkButton(node, node.__link__), caption);
-			node.insertBefore(makeCaptionEdit(node), caption);
+			const textarea = makeCaptionEdit(node);
+			caption.appendChild(textarea);
 			node.appendChild(node._input);
 			if (active === caption) {
-				node.querySelector('textarea').focus();
+				textarea.focus();
 			}
 
 			setTimeout(() => {
@@ -272,7 +273,7 @@ function makeEmbed(Quill, options) {
 			Array.from(node.querySelectorAll('.quill-image__alt')).forEach(e => e.remove());
 			Array.from(node.querySelectorAll('.quill-image__link')).forEach(e => e.remove());
 			Array.from(node.querySelectorAll('.quill-image__caption-edit')).forEach(e => e.remove());
-			node.removeChild(node._input);
+			node.removeChild(node._input);s
 			setTimeout(() => {
 				node.dispatchEvent(new Event(CUSTOM_BLUR_EVENT_NAME, { "bubbles": true }));
 			}, 10);
